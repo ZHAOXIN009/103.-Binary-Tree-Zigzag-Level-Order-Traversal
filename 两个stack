@@ -1,0 +1,37 @@
+class Solution {
+public:
+    vector<vector<int>> zigzagLevelOrder(TreeNode* root) {
+        
+        vector<vector<int>>res;
+        if(root==NULL) return res;
+        stack<TreeNode*> stack1;
+        stack<TreeNode*> stack2;
+        stack1.push(root);
+        while(!stack1.empty()){
+            vector<int> row1;
+            while(!stack1.empty()){
+                TreeNode* temp=stack1.top();
+                row1.push_back(temp->val);
+                stack1.pop();
+                if(temp->left) stack2.push(temp->left);
+                if(temp->right) stack2.push(temp->right);
+            }
+            res.push_back(row1);
+            vector<int> row2;
+            if(stack2.empty()) return res;
+            while(!stack2.empty()){
+                TreeNode* temp=stack2.top();
+                row2.push_back(temp->val);
+                stack2.pop();
+                if(temp->right) stack1.push(temp->right);
+                if(temp->left) stack1.push(temp->left);
+            }
+            res.push_back(row2);
+        }
+        return res;
+        
+    }
+};
+
+Runtime: 4 ms, faster than 86.50% of C++ online submissions for Binary Tree Zigzag Level Order Traversal.
+Memory Usage: 13.4 MB, less than 97.67% of C++ online submissions for Binary Tree Zigzag Level Order Traversal.
